@@ -1,0 +1,10 @@
+Topics covered in this course: 
+    - How to run a JavaScript file
+    - About variables and their scope
+    - About functions and their context
+    - Primitive types
+    - Arrays and objects
+    - Logging to the console
+    - Working with strings, numbers, & dates
+    - Using loops
+    - Using comparison and logical operators
