@@ -1,0 +1,148 @@
+JavaScript: Programming language for web and server-side applications.
+  - Makes web pages interactive and dynamic. 
+  - Calculates, manipulates, and validates data.
+
+* Builds entire web applications using frameworks such as Angular, React, Vue, and Ember. 
+* JavaScript started by running in the browser. Now, it's frequently used on servers/server side applications. 
+
+Browsers: 
+  - No real versions. 
+  - Latest features are released with browser updates.
+  - Different results are possible depending on which broswer a user is using.
+
+Servers: 
+  - A good example of running JavaScript on a server is by using NodeJS.
+  - New versions of JavaScript are shipped frequently and contain new features.
+  - An update to NodeJS is required to use new features. 
+
+JavaScript Syntax Rules:
+  *Case sensitive variables and keywords
+    - The variable "name" can't be referenced any other way (all lowercase).
+    - Keywords such as "if", "new", and "case" follow the same rule.
+    - Variables can't be reserved words (if, new, case, etc).
+    - White space is ignored.
+
+Running JS Code: 
+  - Using the script tag:
+<script src="./index.js"></script>
+
+  - In the terminal using Node:
+       node index.js
+
+Variables in JavaScript:
+   Declaration - when you create a new variable using var, let, or const.
+   Initialization - when a variable is given a value for the first time. 
+
+*Note: a variable can be used before initialization.
+
+Variable Scope in JavaScript
+  - Scope defines where a variable in JavaScript can be used. 
+
+*JavaScript had two types of scope:
+  - Global
+  - Function
+
+Block Scope was introduced with:
+  - let 
+  - const
+
+Global Scope:
+  - Can be referenced anywhere in the file. 
+  - Declared outside any functions or blocks.
+*Note: may cause problems if you're not careful. 
+
+*To declare a variable with Global Scope, simply add the variable outside of a function or any block of code.
+     Example: var name = 'Phillip';
+
+Important note: Use Global Scope variables sparingly to avoid variable clashes in bigger files. 
+
+Question: When would I want to use a global scope variable?
+     Answer: When using a 3rd party library. 
+
+Structured example:
+
+PROJECT                    index.js                    
+ files                      var moment = require('moment');
+  index.html
+  index.js                   //Global Scope
+  package.json              var name = "Phil Squares";
+                             console.log(name);
+DEPENDENCIES
+ moment                       function sayHi(){
+
+                              }
+
+                              function sayBye(){
+
+                              }
+
+Function Scope:
+1.) Is used in a function where declared.
+2.) Accessible in nested functions.
+3.) Not accessible outside a function. 
+
+Hoisting in JavaScript:
+ - Happens behind the scenes.
+When a variable is declared with the var keyword, the declaration is moved to the top of the variables scope. 
+ - Initialization still occurs in the location the programmer enters it meaning that variables
+   can be used before they're declared.
+
+Note: Using variables before declared or initialized may cause a bug --> undefined.
+
+Hoisting takes all variables declared in a function or global scope and moves them to the top of their respective
+scope. 
+   *Remember that the var keyword = Hoisting*
+
+Block Scope:
+1.) Declared using let or const.
+2.) Usable in the block where the variable is declared.
+3.) Block = anywhere encompassed with cury braces { }
+4.) ReferenceError occurs if a variable is used before declaration. 
+
+     Code Example: 
+-----------------------------------------------
+        //Function Scope
+    function watchCourse(){
+      const courseName = 'JavaScript';
+      let satrted = true;
+
+      ------------------------------------
+           //Block Scope
+      if(started){
+        let progress = 50;
+        console.log(`I am $(progress) percent`);
+      } else{
+      ------------------------------------
+        let progress = 0;
+        console.log(`I am $(progress) percent`);
+      }
+    }
+    watchCourse();
+------------------------------------------------
+
+If the progress variable is used outside the block, you will get the following error:
+   *Uncaught ReferenceError: progress is not defined.*
+
+
+var:
+ - Function or Global Scope depending on where it's declared.
+ - Can be used before it's declared.
+ - Generally not recommened. 
+
+let: 
+ - Block Scoped.
+ - Can't be used before it's declared.
+ - Can reassign value.
+ - Recommended more than var, and if there is a need to reassign. 
+
+const:
+ - Blocked Scoped.
+ - Can't be used before it's declared.
+ - Can't reassign value.
+ - Recommended first choice for variables. 
+
+When using const, we can change the value of an attribute on an object without causing an error as the 
+location in memory where the variable is stored has not changed. 
+
+     Code Example: 
+  
