@@ -145,4 +145,186 @@ When using const, we can change the value of an attribute on an object without c
 location in memory where the variable is stored has not changed. 
 
      Code Example: 
+  const dog = {
+    name: 'Duke'
+  }
+  console.log(dog.name);
+    //returns Duke
   
+  dog.name = 'Max';
+  console.log(dog.name);
+   //returns Max
+
+*The same idea sticks with arrays.*
+     Code Example 2:
+
+  const dogs = ['Duke', 'Max'];
+  console.log(dogs);
+  dogs.push('Bella');
+  console.log(dogs);
+
+//returns ['Duke', 'Max', 'Bella']
+
+Value vs. Reference (Variables Storing Data)
+ 
+Value: The data of a variable is copied to other variables, or passed in to functions. 
+  When this occurs, changing data of copied variables does not change the data of the original variable. 
+   - Strings, numbers, booleans, undefined, and null are examples that use this type of assignment. 
+
+Reference: The variable points to a place in memory. 
+  *Does not contain the actual data.
+   - Copying variables copies the location in memory to the second variable. 
+   - Changing the data of one variable affects all variables that have the reference. 
+  *These rules apply to objects and arrays.
+
+*** Value Code Example ***
+     let number = 5;
+     let number2 = number;
+     console.log(number, number2);
+
+  //returns 5 5 in console.
+
+*If I were to reassign the value of number to 10, the following is returned:
+     number = 10;
+     console.log(number, number2);
+       //returns 10 5
+
+*Numbers, Strings, Bools, and undefined are all stored by value here while the output above occurs.
+
+*** Reference Code Example ***
+     let person = {
+      name: 'Preston'
+     }
+     let person2 = person; 
+     console.log(person, person2);
+
+  //returns {name: 'Preston'} {name: 'Preston'}
+
+     person2.name = 'Joe';
+     console.log(person, person2);
+  //returns {name: 'Joe'} {name: 'Joe'}
+
+*The two variables (person and person2) are pointing to the same location in memory.
+
+JavaScript Primitive Types
+- string     - boolean
+- number     - undefined
+- null       - symbol
+
+1.) undefined = the absence of a value (unintentional).
+2.) null = the intentional absence of a value. 
+3.) symbol = provides unique identifiers. 
+
+" ", ' ', or ` ` are used for strings.
+Single quotes are most commonly used in JavaScript. 
+
+*** Symbol Code Example ***
+     let mySymbol = Symbol('hello');
+     console.log(mySymbol); 
+
+  //returns Symbol(hello) in the console. 
+   - The code above creates a unique identifier.
+Even if a second variable is created using Symbol and the string "hello" is passed in, they would not equal each other. 
+
+     let mySecondSymbol = Symbol('hello');
+     console.log(mySymbol == mySecondSymbol);
+     //returns false
+
+*** Primitive Types Exercise Review ***
+     let myVar3 = 1 + '1';
+  - This is considered a string. 
+
+*In JS, taking a number and adding it to a string behaves as if two strings are added together.
+
+Ternary Operator:
+ - Is an in line if/else statement. 
+
+For example: 
+ let myVar6 = myVar5 === undefined ? null : undefined;
+     Explanation:
+    - if myVar5 === undefined is true then set value to null(? null)
+    - if it's false, set to undefined (: undefined)
+---------------------------------------------------------------------------------------------
+JavaScript Fundamentals: 
+ - The "this" keyword
+
+What is "this"?
+ - Refers to the context in which a JavaScript function is run.
+ - Context refers to the circumstances that form the setting for an event, statement, or idea. 
+ - In JavaScript, "this" is the circumstance in which a function is run.
+
+*** Context Examples ***
+1.) "Did you see the game last night? It was crazy!"
+     - It refers to the game.
+
+2.) Suppose a famous person walks past and your friend says "Did you see her?" 
+     - "Her" referring to the famous person.
+-----------------------------------------------------------------------------------------------     
+
+---------------------------------------------------------------------------------------------
+Global Context for Functions: 
+ - Question: When will a function have Global context? 
+
+*Answer: If JavaScript can't find anymore specific content, then it uses the Global context. 
+
+Global Context is the fallback, but can find specific context most of the time.
+---------------------------------------------------------------------------------------------
+
+Function Context: 
+ - There are a few ways to find out what the context of a function is:
+1.) When a function is called on an object. 
+     - Example: obj.myFunction(); 
+
+const person = {
+  name: 'Phil'
+  sayHello: function(){
+    console.log(this);
+    console.log(`Hello ${this.name}!`);
+  },
+};
+person.sayHello();
+
+*The variable name "person" is the context of our function here.*
+
+*** Steps to identify the context of a function ***
+1.) Look for a function call.
+2.) Look to the left... Is there a dot (indicating dot notation)? 
+3.) Look to the left of the dot... Is the variable an object?
+
+*Each nested object has its own context if a function is called on that object.*
+
+Method 2: 
+ - .call, .apply, and .bind set the context of a function to the object argument. 
+
+*If there is no dot, look for: 
+     - .call
+     - .apply
+     - .bind
+
+Code Example: 
+   function sayHello(){
+    console.log(this);
+    console.log(`Hello, ${this.name}!`);
+   }
+
+   const person = {
+    name: 'Phil';
+   };
+
+   sayHello.call(person); 
+   sayHello.apply(person);
+   const newFn = sayHello.bind(person);
+   newFn();
+
+Console Window Results:
+   {name: 'Phil'}
+     Hello, Phil!
+
+  *Same result two more times.*
+
+Method 3: The New Keyword
+ - When looking at JavaScript code, coming across the "new" keyword means that the function that follows 
+   the new keyword has its own context. 
+
+Arrow Functions
+ -  
