@@ -324,7 +324,97 @@ Console Window Results:
 
 Method 3: The New Keyword
  - When looking at JavaScript code, coming across the "new" keyword means that the function that follows 
-   the new keyword has its own context. 
+   the new keyword has its own context.
 
+--------------------------------------------------------------------------------------------------------
 Arrow Functions
- -  
+ - Normal functions in JS are called named functions.
+
+Example: 
+function namedFn(){
+
+}
+
+Arrow functions don't have their own context. Instead, they're enclosed in the surrounding context. 
+ - If no other context is specified, then the context is Global. 
+
+For example: 
+  const person = {
+    name: 'Phil'
+    sayHello: () => {
+      console.log(this);
+      console.log(`Hello ${this.name}!`);
+    },
+  };
+  person.sayHello();
+
+  //The context is Global here. 
+----------------------------------------------------------------------------------------------------------
+
+The JavaScript Console:
+ A. console.log();
+ - console.log takes one to many arguments. 
+ - When adding multiple arguments, seperate them with a comma.
+
+Example: console.log('My name is', myName);
+
+*How to print out an object*
+ - console.log({myPizza: 'Plain'});
+
+*Using console.log to create and describe an object*
+     console.log({
+      crust: 'thin',
+      sauce: 'alfredo',
+      toppings: ['chicken', 'bacon', 'ranch', 'tomato']
+     });
+
+*Passing multiple arguments using console.log*
+     console.log('My favorite pizza is', {
+      crust: 'thin',
+      sauce: 'alfredo',
+      toppings: ['chicken', 'bacon', 'ranch', 'tomato']
+     });
+
+
+ B. console.info();
+console.info() is another option.
+ - Acts in the same way console.log.
+
+*Note: console.info() may be used if a developer intended the message for someone to see.
+ - console.log() is intended for debugging. 
+
+
+ C. console.warn();
+ - When a result is printed out to the console, there is a yellow highlighted warning sign to the left of the result.
+
+ D. console.error();
+ - Has the same functionality as .warn().
+ - The most useful way to use .error() is by using the new error() object. 
+
+ For example: 
+  console.error(new Error('This Error'));  
+
+The statement above returns a red x followed by "Error: " in the console with a full stack trace.
+
+ E. console.table();
+  - Prints out any data passed into the function in table format. 
+  - Makes data easy to read. 
+  - Helpful when viewing all items in an array.
+
+*console.table() works best with objects and arrays.*
+
+Example: If I simply want to view only the names in an object instead of the rest of the attributes, do the following:
+ console.table(people, ['name']);
+
+Example 2: Print multiple arrays on a table.
+ console.table([pizza1, pizza2]);
+
+ F. console.assert();
+  - Great for debugging and allowing developers to see if a given condition is met at some point in your application. 
+  - If a condition is false, print a message. 
+  - If true, nothing is printed. 
+
+*Note: The assert message is only printed if the condition is NOT met.*
+
+Examples: 
+     
