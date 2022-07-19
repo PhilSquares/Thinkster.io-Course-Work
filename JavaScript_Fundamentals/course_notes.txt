@@ -375,18 +375,19 @@ Example: console.log('My name is', myName);
       toppings: ['chicken', 'bacon', 'ranch', 'tomato']
      });
 
-
+-------------------------------------------------------------------------------------------
  B. console.info();
 console.info() is another option.
  - Acts in the same way console.log.
 
 *Note: console.info() may be used if a developer intended the message for someone to see.
  - console.log() is intended for debugging. 
+-------------------------------------------------------------------------------------------
 
-
+-------------------------------------------------------------------------------------------
  C. console.warn();
  - When a result is printed out to the console, there is a yellow highlighted warning sign to the left of the result.
-
+-------------------------------------------------------------------------------------------
  D. console.error();
  - Has the same functionality as .warn().
  - The most useful way to use .error() is by using the new error() object. 
@@ -395,7 +396,9 @@ console.info() is another option.
   console.error(new Error('This Error'));  
 
 The statement above returns a red x followed by "Error: " in the console with a full stack trace.
+--------------------------------------------------------------------------------------------
 
+--------------------------------------------------------------------------------------------
  E. console.table();
   - Prints out any data passed into the function in table format. 
   - Makes data easy to read. 
@@ -408,7 +411,9 @@ Example: If I simply want to view only the names in an object instead of the res
 
 Example 2: Print multiple arrays on a table.
  console.table([pizza1, pizza2]);
+---------------------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------------------
  F. console.assert();
   - Great for debugging and allowing developers to see if a given condition is met at some point in your application. 
   - If a condition is false, print a message. 
@@ -417,4 +422,155 @@ Example 2: Print multiple arrays on a table.
 *Note: The assert message is only printed if the condition is NOT met.*
 
 Examples: 
-     
+    console.assert(1==1, 'The numbers equal');
+*This will not be printed to the console.*
+
+const myAge = 31;
+const yourAge = 20;
+
+console.assert(myAge < yourAge, 'You are younger');
+//Result in console: "Assertion failed: You are younger"
+
+Note: When using .assert, you can add as many objects as you want.
+ For example:
+   console.assert(myAge < yourAge, {myAge}, {yourAge}, {errorMsg: 'You are younger'});
+
+*Multiple strings, variables, and objects can be passed. 
+  - The assertion MUST be first.
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
+ G. console.group(); and console.groupEnd();
+  - console.groupEnd(); will not be used alone. 
+
+Example: 
+ console.group('Hello there!');
+ console.log('First message');
+ console.log('Second message');
+ console.groupEnd();
+
+*Think of the example above as a div*
+ - console.group() does not require a name such as 'Hello there!' as seen above. 
+---------------------------------------------------------------------------------------------
+
+
+*** New Section: Logical & Comparison Operators ***
+---------------------------------------------------------------------------------------
+ - Logical Operators:
+Or -> denoted by "||"
+ - This value OR that value.
+ - Look for one true value. 
+
+AND -> denoted by "&&"
+
+NOT -> denoted by "!"
+
+NULLISH COALESCING -> denoted by "??"
+ - Means this value or that value. 
+ - Looks for subnet of falsy values.
+
+"??" will only move on to the second statement if the left side is undefined or null. 
+  - Other falsy statements do not cause the statement to go to the right side. 
+---------------------------------------------------------------------------------------
+
+ - Comparison Operators: Equality/Inequality
+Equality - double or triple equal signs ==/===
+Inequality - is != // !==
+
+Relational - < // <= or > // >=
+
+Truthy and Falsy Values:
+ - Different from True or False boolean values. 
+
+Falsy values include:
+ - Boolean False
+ - number 0
+ - empty string " " 
+ - null
+ - undefined
+ - Not a number (NaN)
+
+*If one of these values is used, the result will be false.*
+
+Truthy Values: 
+ Basically everything else. 
+  - String containing 0 -> "0"
+  - String containing false -> "false"
+  - An empty array -> [ ]
+  - Empty object -> { }
+  - Empty Function ( ) { }
+
+Code Examples: 
+ console.log(1 == '1');
+//returns True in the console. 
+
+The log statement above returns True because of Abstract Comparison. 
+ - Abstract Comparisons are implemented with == or !=
+
+Questions: 
+What does this mean? 
+ - In JS, both sides of the comparison are converted to the same type before comparison. 
+
+When could this be an issue?
+ - First, remember that null is the intentional absence of a value. 
+ - Undefined is usually the unintentional absence of a value. 
+
+*If null == undefined, a true value would be returned which is incorrect.*
+
+Null and undefined are two different things. 
+
+*Strict Comparison: no conversion is made. 
+ - Compares the values exactly as provided. 
+
+In Strict Comparison, === is used instead of == and !== instead of !=
+ - Example: console.log(1 === '1'); 
+ //returns false as expected. 
+
+When working with numbers in JavaScript, two numbers are abstractly and strictly equal to each other if they're the same number. 
+  Examples: 
+(1 == 1); //True
+(1 === 1); //True
+(1 != 2); //True
+(1 !== 2); //True
+
+Strings are abstractly and strictly equal to each other if they have the same sequence of characters
+  Examples:
+('hi' == 'hi'); //True
+('Hi' !== 'hi'); //True
+
+
+*Objects: Passing and saving by reference vs. Passing and saving by value*
+ - Objects are passed and saved by reference. 
+
+In the example below, we're comparing the location in memory where both objects are stored, NOT the object itself. 
+ - console.log({attr: 'hi'} == {attr: 'hi'});
+     //returns false;
+
+*Two objects are abstractly and strictly equal to each other if they point to the same location in memory.*
+
+console.log({attr: 'hi'} == {attr: 'hi'});
+const myObj = {attr: 'hi'};
+const myObj2 = myObj; 
+console.log(myObj == myObj2);
+ //returns true
+
+*Two booleans are abstractly and strictly equal to each other if they are BOTH TRUE or BOTH FALSE.*
+  console.log(true === true);
+  console.log(false !== true);
+   //both return true.
+
+***Relational Operators***
+     > & >=
+
+***Logical Operator***
+    - OR
+
+  Example: 
+    function sayHello(name){
+      const useName = name || 'Person';
+      console.log(`Hello ${useName}`)
+    }
+
+    sayHello();
+
+  //returns Hello Person
