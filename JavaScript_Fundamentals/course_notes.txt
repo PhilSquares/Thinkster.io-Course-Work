@@ -574,3 +574,92 @@ console.log(myObj == myObj2);
     sayHello();
 
   //returns Hello Person
+
+-----------------------------------------------------------------------------------------------------------------------------
+  ***Logical Operator***
+      - NOT
+
+  1.) The ! operator works great for checking if a variable or attribute exists, and then reacting. 
+  2.) !! lets you convert a truthy value to the boolean result true and falsy to the boolean value false. 
+
+  Exercise Examples:
+  1.) !dog.name
+
+  const dog = {
+    breed: 'Labradoodle'
+  }
+*Since dog.name is undefined, !dog.name returns true. 
+
+  2.) What is the value of name? 
+
+  let name = !!dog.name;
+  name = !dog.name
+
+  //returns false for !!dog.name as it's undefined.
+  //name = !dog.name returns true as it's undefined.
+
+*Provide a value for the if statement variable using the not operator and the name attribute so that you enter the if statement:
+  const ifStatement = !dog.name;
+    if(ifStatement){
+      dog.name = 'Max';
+    }
+    console.log(dog);
+-----------------------------------------------------------------------------------------------------------------------------------
+
+***Nullish Coalescing Operator***
+     - Works the same as or -> ||
+  
+  function setScore(score){
+    return score || 10; 
+  }
+  console.log(setScore(0));
+
+//returns 10 as or || does not allow 0 to be used. 
+  *That's where the "Nullish Coalescing" comes in.*
+
+this value ?? that value
+ -> null ?? use_this
+ -> undefined ?? use_this
+
+*Simply swap the return score || 10; with the following to return the value 0:
+     return score ?? 10; 
+       //returns 0
+
+If console.log(setScore(undefined));
+          or
+   console.log(setScore(null));
+      //returns 10
+
+   console.log(null ?? undefined); 
+      //returns undefined
+
+Exercise Examples:
+  5 ?? 100 --> 5(since it's valid)
+  0 ?? null --> 0(valid)
+  null ?? 5 --> 5(moves on w/ null)
+  null ?? undefined --> undefined
+--------------------------------------------------------------------------------------------------------------------------------------
+
+***Looping in JavaScript***
+
+for - similiar to other languages 
+ *Loop up to length of object times. 
+
+for ... of - loops over each element in an iterable object
+ *Loop up to length of object times. 
+
+For example, 4 elements in an array will loop 4 times. 
+
+for ... in - loop over each key in an object.
+ *Limited number of loops. 
+
+do ... while - Do some code while a condition is met. 
+  *Can go as long as needed.
+
+break - breaks out of a loop and will not re-enter. 
+
+continue - skip one time around the loop.
+  *Re-enters the loop next time.
+
+
+***For Loop Examples on Arrays***
