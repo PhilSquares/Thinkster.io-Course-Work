@@ -663,3 +663,440 @@ continue - skip one time around the loop.
 
 
 ***For Loop Examples on Arrays***
+const dogs = ['Max', 'Duke', 'Apollo']
+
+for(let dog = 0; dog < dogs.length; dog += 2){
+  console.log(dogs[dog]);
+}
+
+//returns Max, Apollo
+ - skips Duke
+
+From the end of the array back to the beginning:
+ for(let dog = dogs.length - 1; dog >=0; dog--){
+  console.log(dogs[dog]);
+ }
+
+ //returns Apollo, Duke, Max
+
+ for ... of examples:
+   const dogs = ['Max', 'Duke', 'Apollo'];
+
+   for(const dog of dogs){
+    console.log(dog);
+   }
+
+*Remember that this will only work on something iterable.*
+
+Pro: Returns straight forward list of items in an Array.
+Con: Harder to skip an item in the array.
+
+Pro tip when coding an Array:
+ - Use the singular version of the name of the array for the local variable.
+
+Example: for(const dog of dogs)
+
+*JavaScript will not let you go out of bounds when using for ... of loops.*
+
+for ... in loop examples:
+
+ const pizza1 = {
+  name: 'The stromboli pizza',
+  toppings: ['pepperoni', 'onions', 'green pep']
+ }
+
+ const pizza2 = {
+  name: 'Hawaii special pizza',
+  toppings: ['smoked ham', 'pinapple']
+ }
+
+ const pizzas = [pizza1, pizza2]
+
+for(const pizzaIndex in pizzas){
+  console.log(pizzaIndex);
+}
+//returns 0 1
+
+
+for(const attribute in pizza1){
+  console.log(attribute);
+}
+//returns name toppings
+
+***While and Do While Loops***
+     let counter = 0;
+
+     while(counter < 5){
+      console.log(counter);
+     }
+
+     counter += 1; 
+
+Note: Without the counter, the loop won't stop running.
+
+  do {
+    console.log(counter2);
+    counter2 += 1;
+  } while(counter2 < 5)
+
+*if condtion is true, keep running.*
+
+break keyword:
+ - stops going through a loop early.
+ - once you break out of a loop, you can't re-enter.
+
+for(let i = 0; i < 5; i++){
+  if(i === 3){
+    break;
+  }
+  console.log(i);
+}
+
+continue keyword:
+ - skips one pass through the loop. 
+
+ for(let i = 0; i < 5; i++){
+  if(i === 3){
+    continue;
+  }
+  console.log(i); 
+  //returns 0 1 2 4 (skips 3)
+ }
+
+*Continue means stop here and execute. No more code this time through the loop.*
+
+***New Section: Functions in JavaScript***
+     - Named Functions: stand alone and methods.
+
+     - Anonymous Functions: 
+      1.) Methods and callbacks
+      2.) Assign to a variable
+
+     - Arrow Functions
+        *Can also be used on objects as methods and callbacks or can also be assigned to a variable. 
+
+     - Default Parameters
+         *Provide fallback values for function parameters. 
+
+     - Named Paramters
+         *Easier way to manage large lists of parameters.
+
+     - Rest Parameters
+         *Allow you to group unknown list of arguments into one parameter. 
+
+*Question: What is the difference between arguments and parameters?
+  1.) Argument = a value you pass into a function. 
+       Example: sayHello('Preston');
+    *Preston is the argument above.
+
+  2.) Parameter = The name you assign a value to inside the function.
+    *Meaning wherever you declare a function, you also determine what parameters can be passed into the function.
+
+    Example: function sayHello(name){
+      console.log('Hello', name);
+    }
+
+*Question: Why do we need to use arguments and parameters in the first place?
+  - Make functions dynamic.
+Users can pass in data to use in the function. If there are no arguments/parameters, the function does the same thing every time.
+
+*Parameters are optional in functions.
+
+Code Examples:
+ - Calling a named function with a name parameter:
+      sayHello('Phil');
+
+ - Calling the same named function on an object:
+      person.sayHello(person.name);
+
+***Using the return keyword***
+  Code Example: 
+function subtract(num1, num2){
+  return num1 - num2;
+}
+const answer = subtract(10, 4);
+console.log(answer);
+ //returns 6 as expected.
+
+*If return were removed above, the terminal would show "undefined."
+
+***Anonymous Functions***
+    const bakePizza = function(pizzaName) {
+      return "Baking: " + pizzaName;
+    }
+    const result = bakePizza('cheese');
+    console.log(result);
+
+*How to use Anonymous Functions as methods on objects*
+  const pizza = {
+    name: 'cheese',
+    bake: function(){
+      return 'Baking:' + this.name;
+    }
+  }
+
+*Using an Anonymous Function on Array*
+  cost pizzas = ['Cheese', 'Pepperoni'];
+  pizzas.forEach(function(pizza)){
+    console.log(pizza);
+  });
+    //returns cheese
+              pepperoni
+
+Arrow Functions - Don't have their own context. 
+ *Their context is set to that of the parent.*
+
+Example: 
+ const bark = (dogName) => console.log(dogName + 'Bark');
+
+*Notes: 
+1.) If there is only 1 parameter, you can remove parenthesis.
+2.) dogName in the code example above is the parameter. 
+3.) console.log(dogName + 'Bark'); is the body of the function. 
+
+*Using Arrow Functions on Objects*
+  const dog = {
+    name: 'Duke',
+    bark: (dogName) => {
+      console.log(dogName + 'is barking!');
+    }
+  };
+  dog.bark(dog.name);
+
+*Using an Arrow Function as a Callback*
+  const dogs = ['Max', 'Duke'];
+  dogs.forEach((dog) => {
+    console.log(dog);
+  });
+
+*Note: In one line arrow functions, return objects wrapped in ()
+  For example: 
+const register = (dogName, dogBreed) => ({dogName, dogBreed});
+
+Implicit Return - In one line arrow functions, the body is automatically returned for you. 
+  Example: 
+const add = (num1, num2) => num1 + num2 
+const sum = add(8, 8);
+console.log(sum);
+
+Default Parameters:
+  - If there are two parameters in a function and we only call one of them, the terminal show "NaN."
+  - To help avoid this, developers can set default parameters as shown in the following example. 
+
+//Default Parameters
+  function divide(top, bottom = 1){
+    return top/bottom 
+  }
+  const answer1 = divide(4,2);
+  console.log(answer1); //returns 2
+
+  const answer2 = divide(4);
+  console.log(answer2); //returns 4 as 4/1 = 4
+
+//bottom = 1 is the default parameter in the example above. 
+
+//Named Parameters:
+  - Functions need their parameters(all).
+  - The order in which the parameters are provided matters.
+Once you use named parameters properly, order no longer matters.
+
+For example: 
+  //Named Parameters
+  function printDogInfo({name, breed, age, foodPreference, likesToWalk}){
+    return `${name} is a ${breed}, likes to eat ${foodPreference}, and is ${age} years old. ${name} ${likesToWalk ? also likes to walk. : does not like to walk}};
+  }
+  const dogInfo1 = printDogInfo ({age: 4, breed: 'spaniel', foodPreference: 'dry food', likesToWalk: True, name: 'Duke'});
+  console.log(dogInfo1);
+
+*Rest Parameters:
+  - Allows for greater flexibility in a function.
+  - Takes all arguments passed in from a certain point onward and puts them into an array. 
+
+*Once you have declared a rest parameter, you can't put any other parameter after.*
+
+Code Examples: 
+
+  //Rest Parameters 
+function myConsole(method, ...items){
+  console.[method](items.join(','));
+}
+myConsole('info', 1, 2, 3, 4);
+  //returns 1 2 3 4
+
+
+function makePizza(name, price, ...ingredients){
+  return {
+    name, 
+    price,
+    ingredients
+  }
+}
+const pizza = makePizza('Pepperoni', 10, 'cheese', 'marinara', 'pepperoni');
+console.log(pizza);
+
+***Working with Strings***
+     const name = 'Preston';
+     console.log(name.slice(0,4));
+       //returns Pres
+
+     const phone = '888-111-222';
+     console.log(phone.split('-'));
+       //returns ['888', '111', '222']
+
+***Template Strings***
+     - Defined by using back ticks.
+     - NOT single or double quotes.
+Template Strings are much easier than concatentation. 
+
+     For Example:
+    const templateString = `Hello, ${name}`;
+    console.log(templateString);
+
+    //returns Hello, Preston
+
+***Working with Objects***
+     - Objects are denoted by curly braces. 
+     - They're key/value pairs. 
+     - Under scores are allowed in key names.
+     - No dashes.  
+
+How to access data in an object: 
+ *Two ways:
+ 1.) Dot notation
+ 2.) Bracket Notation
+
+Dot Notation = nameOfObject.key
+
+***Freezing Objects***
+- Preserving the data in objects so that it can't be overwritten.
+     Usually, objects can be overwritten at anytime. 
+
+JavaScript has a built in Object class that has many methods we can use. 
+  Example: Object.freeze(dog); 
+Once an object is frozen, we can't change the data or add anything to the object.
+ //File must be running in strict mode 
+   - Add 'use strict'; to the top of the file. 
+
+Working with Object Keys
+ - How to access each key on an object (use for ... in)
+
+Example: 
+  const pizza = {
+    name: 'Pepperoni',
+    price: 8,
+    toppings: ['marinara', 'cheese', 'pepperoni']
+  };
+  for(const key in pizza){
+    console.log(key);
+  } 
+
+If we want to access the keys and modify them, the best thing to do is use the Object.keys() method.
+  console.log(Object.keys(pizza));
+
+This shows the keys in an array.  
+
+***Stringifying Objects and Parsing Objects***
+     console.log(JSON.stringify(pizza));
+
+There are other ways to log the object as a string so it's easier to read... (see next page)
+  console.log(JSON.stringify(pizza, null, 2)); 
+   - Pizza is our object here. 
+   - The 2 is the # of spaces used for each level of indentation as it prints out the object. 
+
+*Instead of null, I can also pass in a function or array of strings.*
+  - If I pass an array of strings, the array should contain the keys I want to print out. 
+
+For example: 
+ console.log(JSON.stringify(pizza, ['name', 'toppings'], 2));
+
+***Working with Arrays***
+     - .push adds a value to the end of the array. 
+     - .unshift adds a value to the front of an array. 
+
+How to log an array at a specific index: 
+  console.log(dogs[0]);
+
+How to access the last element in an array when you don't know how long the array is: 
+  console.log(dogs[dogs.length - 1]);
+
+Array.map:
+  - The purpose of the .map method is to change the data in some form. 
+  - Returns a new array. 
+
+Example: 
+  const dogs = ['Max', 'Duke', 'Cincy'];
+  const newDogs = dogs.map(dog => ({name: dog}));
+  console.log(newDogs);
+
+  //returns an array of 5 objects instead of 5 strings. 
+
+* .map loops over every item in the array and changes it in some way. *
+
+Example 2: 
+  const ages = [1, 2, 3, 4];
+  const newAges = ages.map(age => age * 5);
+  console.log(newAges)
+
+  //returns [5, 10, 15, 20] 
+
+.map method approach: 
+  1.) Pass in a function. 
+  2.) The function is called once for each item in the array. 
+  3.) Manipulate the item. 
+  4.) Return the new item.
+
+*The map method always returns a new array; it dosen't affect the original array.*
+
+Array.filter
+ - Purpose is to remove some of the items from the array. 
+
+Array.find and Array.findIndex
+ - Both allow you to look through an array to find the first item that matches a given condition.
+
+*find returns the whole item.
+*findIndex returns the index where the item is located in the array. 
+
+If multiple items match the condition, it returns the first item found. 
+ - If you want all items that match, use .filter instead.
+
+*When using .find and the item is not there, it returns undefined. 
+*When using .findIndex and the item isn't there, it returns -1.
+
+Array.slice
+ - Takes part of an array and creates a new array from it. 
+ - Must pass in one parameter. 
+
+  const ages = [1, 2, 3, 4];
+  const newAges = ages.slice(2);
+
+  //returns [3, 4] because it starts a new array at index 2.
+
+*You could also have a start/end index like the following example: 
+  const newAges = ages.slice(1, 3);
+  //returns [2, 3]
+
+*Slice method goes up to but does not include the ending method you provide.*
+
+Array.splice
+ - creates a new array with a subset of items from the original. 
+
+Splice completely removes an item from an array. 
+ - Changes the original array.
+
+  const ages = [1, 2, 3, 4]
+  const newAges = ages.splice(1,1);
+  *The first number 1 is the "starting index" and the second 1 is "how many items should be removed".
+
+Splice also removes the items that were in the array and shows on the console.
+
+Array.forEach
+ - Loops over each item in an array.
+
+Example: 
+  const dogs = ['Duke', 'Max']
+  dogs.forEach(dog => console.log(dog));
+
+Array.includes 
+ - Checks if a value exists in an array (returns T or F).
+
+*String comparisons are "case sensitive." 
