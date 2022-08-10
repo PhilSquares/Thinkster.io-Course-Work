@@ -1,0 +1,18 @@
+Angular Fundamentals
+
+*** Using the CLI ***
+  - Start by intalling Angular CLI with the following command: 
+       npm install @angular/cli -g
+
+To create a new project, run: "ng new ProjectName"
+  - There are a few optional parameters we can use here such as: 
+
+       1.) --dryRun 
+    This parameter will go through the entire process of creating an Angular project but won't make any changes to my file system. 
+      - Shows the user what would happen without changing anything locally. 
+
+       2.) --skipInstall
+    Skips installing the node modules that take most of the time when creating a new project.
+
+Once the new project is created, cd into it. For example "cd ProjectName"
+  - To start the project, run "npm start"

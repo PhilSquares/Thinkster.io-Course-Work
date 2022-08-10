@@ -1,0 +1,7 @@
+*** Exercise 1: Create an Angular App ***
+
+ - Make a dry run of creating an Angular application
+ - Create a new Angular application without installing any node modules
+ - Create an app named Flopbuster
+ - Start up the application you created
+ - Optionally check out the package.json
