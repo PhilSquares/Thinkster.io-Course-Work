@@ -1,7 +1,7 @@
 Angular Fundamentals
 
 *** Using the CLI ***
-  - Start by intalling Angular CLI with the following command: 
+  - Start by installing Angular CLI with the following command: 
        npm install @angular/cli -g
 
 To create a new project, run: "ng new ProjectName"
@@ -16,3 +16,312 @@ To create a new project, run: "ng new ProjectName"
 
 Once the new project is created, cd into it. For example "cd ProjectName"
   - To start the project, run "npm start"
+
+
+
+*** Introduction to an Angular Application ***
+Looking at the "Flopbuster" example project folder created in the previous exercise, we can see that the following git files have been created:
+ - .editorconfig
+ - .gitignore
+
+When the "ng new Flopbuster" command finished running, a new git repo was initialized upon completion. Same goes for any new Angular project created using the CLI.
+
+angular.json - The core configuration file for any Angular projects.
+karma.conf.js - A configuration file for the default unit test runner (karma in this case).
+ - Angular works with other unit test runners as well but the default is karma.
+
+package-lock.json && package.json - both have to do with npm.
+ - package.json involves all of the packages used when running the Angular project that will be installed using npm.
+
+tsconfig files: 
+ - tsconfig.json is the important one here. 
+The tsconfig.json file is the TypeScript configuration file.
+
+
+
+*** Digging into the src directory ***
+ - The "app" directory is what we will mainly be dealing with. 
+All the application code lives in the "app" directory. 
+ *Note: Each file in the app directory (app.component.something) represents the files for our top level component. More on components later in the course. 
+
+- The "assets" directory is where most static items are stored. For example, images. 
+
+The "environments" directory contains files for configuring various environments. 
+ - This matters when pushing a project to production.
+ - More specifically, the need to configure things differently based on what environment you're in.
+
+The default index.html file is our global html file.  
+
+Next is the main.ts file:
+ - main.ts is the bootstrapping file for Angular.
+ - We rarely ever touch this file in the course. 
+
+What is Bootstrap?
+ - Open-source HTML, CSS, and JavaScript framework used to create mobile-first and responsive websites.
+
+polyfills.ts:
+ - Angular is built on the latest standards of the web platform.
+ - Targeting such a wide range of browsers is challenging because they do not support all features of modern browsers.
+ - polyfills.ts compensates by loading polyfill scripts ("polyfills") for the browsers that need to be supported for the project.
+
+styles.css is the global style location for the project.
+
+
+
+*** Introduction to TypeScript Types ***
+TypeScript = a small superset of JavaScript.
+ - Adds a small amount of new functionality.
+*Note: TypeScript is required for Angular.
+
+When declaring a variable in TypeScript, we commonly use the let keyword.
+     For example: let age;
+Our new age variable can also be set to a value. 
+ - In this case, age would be a number:
+     age = 3;
+However, in TypeScript, the variable age could also be equal to a string:
+     age = "Joe";
+Of course, this makes no sense as age is always a number. TypeScript defines a strict type using the following syntax:
+     let age: number;
+
+In some cases, we want to define a variable(s) that may return multiple types. For example, a result.
+ - Instead of declaring a strict type, we can tell TypeScript to be more relaxed by using the "any" type.
+     let result: any;
+     
+     result = 3;
+     result = true;
+     result = string;
+     etc ...
+
+There are other types aside from the basic boolean types. For example, the "object" type:
+ - Thinking back to JavaScript syntax, an object is represented by a set of curly braces { }
+     For example: 
+       let person: { name: string, age: number};
+       person = { name: "Joe", age: 25};
+       person.age = 40;
+       person.name = "Bob";
+
+*Another important part of TypeScript is that we can give parameters types: 
+     function createPerson(age: number, name: string){
+      return {age, name}
+     }
+
+     createPerson(25, "Joe");
+
+*By adding a colon followed by the type in the function parameters, we can't mix up the types in the function call shown above.
+  - What would happen if I were to flip the parameters in the function call?  
+       createPerson("Joe", 25);
+
+*Answer: Throws an error since the parameters have a strict type (order matters).
+
+EXAMPLE ON CLASSES: 
+  class Person {
+    age: number;
+    name: string;
+  }
+
+  let bob = new Person();
+*dot notation will work the same here. For example, .age and .name 
+
+For arrays, we can also set a strict type:
+ let ages: number[] = [] //Sets number array to a new empty array. 
+ ages.push(25); //pushes a number value 25 successfully
+
+If we attempt to push anything else other than type number to the array, an error is thrown.
+
+*Note: In arrays, we want to contain a variable list of types so type any[] is more common:
+   let ages: any[] = [];
+
+
+*** Specifying Scopes to Construction Parameters in Classes ***
+Constructor in TypeScript - special function of the class that is responsible for initializing the variables of the class.
+ - TypeScript defines a constructor using the constructor keyword.
+ - A constructor is a function and hence can be parameterized.
+ - The this keyword refers to the current instance of the class.
+
+class Movie {
+  title: string;
+  year: number;
+  constructor(title: string, year: number){
+    this.title = title;
+    this.year = year;
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+*Note: The above example requires a lot of work to simply store the "title" and "year" variables. Typically, this approach is standard. However, in TypeScript, there is a shorthand approach to this.
+  - The shorthand approach I'm refering to is to use "accessor modifiers."
+For example, using the keywords "public" and/or "private"
+
+class Movie {
+  constructor(public title: string, private year: number){
+  
+  }
+
+  formatTitle(){
+    return this.year;
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+Notes: 
+ - The formatTitle function above shows us that using dot notation will return the title or year types as expected thanks to the use of access modifiers.
+ - In the example above, the "year" property won't be accessible outside of the class due to it being private.  
+ - Typically, the constructor should be accessible so public is often used.
+
+
+*** TypeScript Decorators ***
+ - A way to provide metadata on a specific piece of code. 
+ - TypeScript Decorators are TypeScript Constructs.
+
+For example, on our Movie class, we may use a specific decorator (denoted by the @ symbol and parens):
+
+@Decorator()
+class Movie {
+  constructor(public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+*The typical example for a decorator is to give Angular itself instructions on how to use a specific class.
+  - As mentioned before, the Decorator above applies to our Movie class because it's the next code construct following the decorator. 
+  - Decorators are used heavily by Angular to mark certain pieces of code to have special meanings within the Angular framework.
+
+ *Decorators can be seen around classes as shown above but also on properties (longTitle example below):
+@Decorator()
+class Movie {
+   @PropertyDecorator() longTitle: string;
+  constructor(public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+---------------------------------------------------------------------------------------------------------
+
+ *Example of Decorators on parameters to functions: 
+
+@Decorator()
+class Movie {
+   @PropertyDecorator() longTitle: string;
+  constructor(@ParamDecorator() public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+
+*** Introduction to Angular Components ***
+     What is a Component?
+A Component is a combination of display and logic.
+ - When it comes to components, it's not just about simply displaying an image with text on top of it, it's what functionality goes along with the display shown.
+
+*Side Note: 
+  Check out the following PRO ONLY course for a more in depth understanding of Angular components
+    Link: https://thinkster.io/tutorials/fundamentals-of-angular-getting-started/introduction-to-angular-components 
+
+The .html and .ts files are the main files in any individual Components. 
+ - The following code example is taken out of our app.component.ts file: 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Flopbuster';
+}
+
+*Note: There is only one templateUrl in the @Component decorator allowed. 
+  - Multiple styleUrls can be used if needed.
+
+The selector seen in the code above is set to 'app-root'
+ - If we navigate to the index.html file in our application, we can see the following <app-root></app-root> tag:
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Flopbuster</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+app-root is not a built in html element. Instead, it's known as a "custom element."
+ - Browsers can include custom elements without any issues. The browser simply ignores any custom elements to avoid errors.
+ - Angular does not ignore custom elements. It processes the app-root tag and knows about the app-component. More specifically, it processes the app-component.ts file and sees the selector: 'app-root'
+When Angular encounters the app-root element in our index.html file, it knows the component in that spot in the dislay.
+
+Looking at the app-component.ts file code above, we see title = 'flopbuster';
+ - The title property is a custom piece of data that has been given to the component by default when creating a starter application in Angular. 
+
+
+*** Data Binding ***
+A web application is all about dynamic data. 
+ - Data that either changes or has changed. 
+ - Data Binding is displaying data that is dynamic. Data that either changes or has changed. 
+The idea is to display this type of data (aka Data Binding).
+
+*Note: The core purpose of Angular and other front-end frameworks is to bind data and display it to the user. 
+  - Static text such as an h1 tag is not what we necessarily want here. Look at the following example:
+      *app.component.ts* 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent {
+  movieTitle = "Batman and Robin";
+}
+
+*Goal: Get Angular to take the data in the movieTitle variable and render the data out in the app.component.html file. 
+  - To do this, use the special binding syntax {{ movieTitle }}
+
+For example: <h1>Hello {{ movieTitle }}</h1>
+
+What if we have a button as follows but we want the button to be disabled so that the user can't choose "Best movie better" for Batman and Robin specifically.
+  <button>Best Movie Ever</button>
+
+Our application may have a corresponding variable -> bestMovieEver = false; as shown below.
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent {
+  movieTitle = "Batman and Robin";
+  bestMovieEver = false;
+}
+
+Back in the template, we want to bind it to be disabled using the following:
+<button [disabled]="!bestMovieEver">Best Movie Ever</button>
+ - The example above is considered property binding.
+ - The disabled attribute (disable without square brackets [] ) simply disables the button regardless of the variables boolean value. 
+
+*It's important to understand the difference between an html attribute (disabled) and the disabled property of the button.
+
+What if we wanted to hide the button instead of disabling it. 
+ - Use the [hidden]="!bestMovieEver" property binding.
+
+*Question: What is the difference between the two types of binding so far?
+  <h1>Hello {{ movieTitle }}</h1> and <button [disabled]="!bestMovieEver">Best Movie Ever</button>
+
+   - Double curly braces {{ }} is considered string interpolation. 
+Angular sticks the value of whatever I tell it to right into the html. We typically use this when we want to display a piece of data.
+
+   - Property Binding on the other hand with the square brackets [ ] is for binding to properties of DOM elements such as [hidden] or [disabled] properties.
+
