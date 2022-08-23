@@ -1,0 +1,59 @@
+*** Exercise 4: Listening to Events ***
+
+*Goals:
+1.) Listen to the click event on the year and rating displayed data and log out to the console.
+2.) Bonus: change to use a single event handler, and display the text that was clicked (hint, see the innerText property)
+
+Navigate to the following link to see the exercise code on stackblitz:
+https://stackblitz.com/fork/angular-zaoxk4?file=src%2Fapp%2Fapp.component.ts 
+
+For more information on listening to events in Angular, click the following link:
+        https://developer.mozilla.org/en-US/docs/Web/API/Event
+
+##########################################################################################################
+Exercise Code: 
+
+    app.component.html:
+<h1>YOUR_NAME_HERE's favorite flop is......</h1>
+
+<dl class="row">
+
+  <dt class="col-sm-3">Year Released</dt>
+  <dd class="col-sm-9" (click)="yearClicked($event)">{{favFlop.yearReleased}}</dd>
+
+  <dt class="col-sm-3">Rating</dt>
+  <dd class="col-sm-9" (click)="ratingClicked($event)">{{favFlop.rating}}</dd>
+
+</dl>
+
+    app.component.ts:
+import { Component } from '@angular/core';
+
+@Component ({
+    selector: 'my-app',
+    templateUrl: './app.component.html',
+    styleUrls: [ './app.component.css' ]
+})
+export class AppComponent {
+    //Add data elements for your name, the title, year released, rating, and imdb link of your favorite movie
+    name = "Joe"
+    favFlop = {
+        title: "Wing Commander",
+        yearReleased: 1999,
+        rating: "PG-13",
+        imdbLink: "https://www.imdb.com/title/tt0131646/"
+        soundtrack: {
+            spotifyLink:
+            "https://open.spotify.com/albumn/
+        }
+    }
+
+    yearClicked(event) {
+       console.log('year clicked', event.target.innerText);
+    }
+
+    ratingClicked(event) {
+       console.log('rating clicked', event.target.innerText);
+    }
+}
+##########################################################################################################

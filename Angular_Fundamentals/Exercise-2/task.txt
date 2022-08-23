@@ -35,7 +35,7 @@ class Movie {
   title: string // Remove this
 }
 
-// TODO 5: Find and fix all problems with the following  code by applying types - review the solution video for my implementation
+// TODO 5: Find and fix all problems with the following code by applying types - review the solution video for my implementation
 
 let userId = 5
 function checkoutMovie(movie: Movie, inventory, checkoutLog, userId: number[]) {

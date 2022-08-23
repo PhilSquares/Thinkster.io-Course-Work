@@ -325,3 +325,65 @@ Angular sticks the value of whatever I tell it to right into the html. We typica
 
    - Property Binding on the other hand with the square brackets [ ] is for binding to properties of DOM elements such as [hidden] or [disabled] properties.
 
+*Note: When working with data, complex objects are used instead of having seperate pieces of information. 
+  For example: 
+    favFlop = {
+    title: ,
+    yearReleased: ,
+    rating: ,
+    imdbLink: ,
+  }
+Data can be accessed in the object above by using dot notation (favFlop.title, etc).
+
+
+*** The Safe Navigation Operator ***
+The operator itself is represented by a question mark " ? "
+  For example: 
+<a [href]="favFlop.soundtrack?.spotifyLink">Spotify</a>
+
+The code above protects our application against null and undefined values in property paths.
+
+
+*** Listening to Events ***
+In essence, front end frameworks revolve around 2 things:
+ 1.) Giving the user information (Displaying/Binding data). 
+ 2.) Interacting with the user.
+
+Browsers have events that fire off when users interact.
+ - Allows us to receive information from the user.
+
+MDN Resource: https://developer.mozilla.org/en-US/docs/Web/API/Event
+ - MDN (Mozilla Developer Network) is a good resource for official documentation-type information on HTML, CSS, and JavaScript.
+
+How to add code with ability to listen for a click event:
+  Example: 
+    *** app.component.html ***
+<button 
+  (click)="onCheckout($event)"
+  class="btn btn-primary">Check Out</button>
+
+In the app.component.ts file, add the following method:
+  onCheckout(event){
+     console.log('check out', event);
+  }
+
+*When the button is clicked, check out is printed in the console.*
+  - Sometimes it's important when listening to an event to find out information about the event itself.
+  - To do this, a special parameter ($event) must be passed into the (click) shown above in the .html file.
+  - To receive the event, add another parameter in the .ts file (event).
+
+*Note: The event parameter is also added to the log statement above in the .ts file.
+  - By adding this event, there are also many properties that go along with it. 
+     For example: console.log('check out', event.target);
+  Shows us the html button element that the event is working with in the console window.
+
+Example code for a mouse over message:
+  *** app.component.html ***
+<h2 (mouseover)="titleHover('hovered')"
+
+  *** app.component.ts ***
+titleHover(message){
+  console.log(message + 'the title');
+}
+
+*When we hover in the application, "hovered the title" appears in the console window.*
