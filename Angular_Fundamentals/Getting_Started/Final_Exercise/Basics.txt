@@ -1,3 +1,5 @@
+*** Final Exercise: Putting the Basics Together ***
+
 1.) Create a new Angular application
 
 2.) In the AppComponent
