@@ -6,5 +6,29 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Basics_Review';
+  selectedIndex: number = -1;
+
+  onVoteClick(index: number) {
+    if (this.isSelected(index)) {
+      this.selectedIndex = -1;
+    } else {
+      this.selectedIndex = index;
+    }
+  }
+
+  isSelected(index: number) {
+    return this.selectedIndex === index;
+  }
+
+  anySelected() {
+    return this.selectedIndex !== -1;
+  }
+
+  getButtonText(index: number) {
+    if (this.isSelected(index)) {
+      return "Unvote";
+    } else {
+      return "Vote";
+    }
+  }
 }
