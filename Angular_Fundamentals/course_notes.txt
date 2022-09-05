@@ -387,3 +387,73 @@ titleHover(message){
 }
 
 *When we hover in the application, "hovered the title" appears in the console window.*
+
+
+*** New Section: Organizing an Angular Application ***
+
+     Topics Covered: 
+ - What are modules, and the app module.
+ - What are services, and how to use them to organize your application state and logic.
+ - How to create components and services.
+ - How to divide up your application using child components.
+ - How to communicate between child and parent components.
+ - How to organize the CSS in your application.
+ - How to use components and services together.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*What is a Module? 
+  - A grouping of application pieces such as components, services, and various other pieces. 
+  - A module is a class. 
+For example: 
+  export class AppModule { }
+
+Most module classes are empty like the one above. The most important part of a module is in the decorator. 
+  Example: 
+ - When we run the "ng new projectName" command, the following module is generated: 
+-------------------------------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppRoutingModule { }
+-------------------------------------------------------------------------------------
+*The @NgModule decorator above contains all of the information that the module needs to know in order to group up pieces of the application together to work with Angular.
+  - The example above shows a single parameter passed into the @NgModule which is an object that has 4 properties (declarations, imports, providers, and bootstrap).
+  - Keep in mind that the order here does not matter. However, the keys need to be correct.
+*Note: There are other keys that Angular supports. Each key above represents the most common/basic we will often see in a module.
+
+First up is "declarations"
+ - Declarations are where we list all the components for an application.
+
+"imports" 
+ - Where we can bring in other modules. 
+Our example above contains two other modules we're bringing in (BrowserModule and AppRoutingModule). 
+ 1.) BrowserModule is a built in Angular module that allows Angular to manipulate the browser.
+ 2.) AppRoutingModule is a custom module created by the CLI for our specific application that enables routing.
+
+*Note: It's important to know that modules can come from the Angular framework such as the BrowserModule, they can be modules that we create with our own code such as what's inside of the AppRoutingModule, or they can be 3rd party modules.
+ For example, Angular Material or other component libraries. 
+
+ 3.) Next we have "providers"
+  - Typically about services which we often don't touch. More specifically, services that are part of the AppModule.
+
+4.) Finally, there is the "bootstrap" property
+ - Lists the main root component. In this case [AppComponent] since we only have one component. 
+ - The AppComponent will typically always be the root component.
+ - This is the component that starts off the processing of Angular and how it handles the page.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*What are Services?
