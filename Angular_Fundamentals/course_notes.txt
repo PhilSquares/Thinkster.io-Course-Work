@@ -457,3 +457,177 @@ Our example above contains two other modules we're bringing in (BrowserModule an
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 *What are Services?
+ - A place to keep application state & logic.
+Angular provides containers to store application states and logic.
+
+ 1.) Components - store display logic (how to show a specific piece of information or what is visible when a user clicks a button).
+Components also store display state. 
+ - For example, a particular panel opening when a user clicks an open button.
+
+2.) Services - containers to store application logic and application state.
+ - For example, data such as the movies we're dealing with in the previous example. 
+Each movie would be better suited in a service over being stored inside of a component.
+
+Criteria for Display Vs. App Logic & State:
+ - If it belongs in a single view:
+     Display Logic & State.
+
+ - If it belongs in multiple views:
+     Application Logic & State.
+
+What does a service look like? 
+  Code Example: 
+---------------------------------------------
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FlopService{
+
+  constructor() { }
+}
+---------------------------------------------
+
+Lines 483-485 we have the decorator for the service.
+*Note: For a component, we have a component decorator and a module decorator. 
+
+In the example above, we have an Injectable decorator, not a service decorator. 
+  - Understand that the Injectable decorator allows Angular to know where the service can be available.
+
+The next important piece is the class itself: 
+
+export class FlopService{
+  movie = {
+    "title": "The Room",
+    "year": 2003,
+    "stars": 3.7,
+    "rating": "R", 
+    "director": "Tommy Wiseau", 
+  }
+
+  constructor() { }
+
+  calculateRentalFee(){
+    // implementation
+  }
+
+  retrieveFlops(){
+    // implementation
+  }
+}
+
+How to inject a service in a component:
+ - Give the component class a constructor() { } as seen below.
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  constructor(public flopService: FlopService){
+
+  }
+
+  onClick(){
+    this.flopService.retrieveFlops();
+  }
+
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+*Creating Services with the CLI
+In Angular, there are often very few modules created. Most of the time, just the app module created by the ng new command.
+*Note: It's good to learn the CLI so there is no need to manually create services.
+
+The "ng generate" command:
+ - To generate a service, run the following
+     *** ng generate service favFlop ***
+
+If for some reason we don't want a test file to be created when generating a service, run the ng generate service command with the --skipTests flag:
+     *** ng generate service testService --skipTests ***
+
+*Note: There is some shorthand when creating services. 
+  For example: "ng g s" is the same as "ng generate service"
+
+If we want to generate a service with shorthand and place it in another directory, run the following:
+  ng g s services/flopRetriever
+
+The command above will generate a new service named flopRetriever in the services directory.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*Creating Components with the CLI: 
+  Remember that Components Hold Display Logic & Display State
+   - Run the following command: 
+      "ng g c nameOfComponent"
+
+4 files are created in a component: 
+  1.) .html
+  2.) .spec.ts
+  3.) .ts
+  4.) .css
+*Note: There is something new/unique here that we have yet to see. 
+  UPDATE src/app/app.module.ts (467 bytes)
+
+When Angular applications are created, there is a default prefixv (app) created for the components inside of an application.
+ - When we see the @Component decorator in a component, the first item inside is the selector with the prefix 'app-nameOfComponent'
+
+In TypeScript files, the class is implementing an interface called OnInit
+  For example: 
+export class VoteComponent implements OnInit
+ - "implements" is a TypeScript keyword that tells us that OnInit is an interface.
+ - Basically a bunch of fancy logic to state that this class must have the ng OnInit function.
+
+        *** ngOnInit is a lifecycle method ***
+ - The method fires when the component is initialized. 
+ - Typically where we want to retrieve data that lives on the server. 
+
+For example, the code in a new component is as follows: 
+  export class VoteComponent implements OnInit {
+
+    constructor() {}
+
+    ngOnInit(): void {
+
+    }
+  }
+
+*Note: If we need to inject a service into the class, we can add it to the constructor.
+
+
+*** CLI Flags for Creating Components ***
+At this point, we've already seen the --dryRun and --skipTests flags. 
+ - The --inlineStyle flag is fairly common as well. This flag tells Angular not to put the CSS into its own seperate file. Instead, it puts the file inline. 
+ - Another common flag is --inlineTemplate where the html file is inline as well. 
+ - The --selector flag is not one that's commonly used but is still important. This flag allows us to customize the selector in the .ts file.
+
+*Working example: 
+  Run the following on the command line -> ng g c cart --skipTests --inlineStyle --inlineTemplate 
+   - Only 1 file is created but the app.module.ts is still updated: 
+CREATE src/app/cart/cart.component.ts (259 bytes)
+UPDATE src/app/app.module.ts (541 bytes)
+
+*Note: The updates to our app.module.ts file are important to keep in mind as Angular will not know about any new components if they aren't imported/added as follows:
+  import { VoteComponent } from './vote/vote.component';
+  import { CartComponent } from './cart/cart.component';
+
+  @NgModule({
+    declarations: [
+      VoteComponent,
+      CartComponent
+    ],
+  })
+
+*** Quick Review ***
+1.) What's the flag for not installing node modules in a new app? 
+  *Answer: --skipInstall
+
+2.) What's the command that npm start runs? 
+  *Answer: ng serve
+
+3.) How do you put a service in a subdirectory?
+  *Answer: ng g s subdir/name
