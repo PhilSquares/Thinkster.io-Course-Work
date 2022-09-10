@@ -1,0 +1,633 @@
+Angular Fundamentals
+
+*** Using the CLI ***
+  - Start by installing Angular CLI with the following command: 
+       npm install @angular/cli -g
+
+To create a new project, run: "ng new ProjectName"
+  - There are a few optional parameters we can use here such as: 
+
+       1.) --dryRun 
+    This parameter will go through the entire process of creating an Angular project but won't make any changes to my file system. 
+      - Shows the user what would happen without changing anything locally. 
+
+       2.) --skipInstall
+    Skips installing the node modules that take most of the time when creating a new project.
+
+Once the new project is created, cd into it. For example "cd ProjectName"
+  - To start the project, run "npm start"
+
+
+
+*** Introduction to an Angular Application ***
+Looking at the "Flopbuster" example project folder created in the previous exercise, we can see that the following git files have been created:
+ - .editorconfig
+ - .gitignore
+
+When the "ng new Flopbuster" command finished running, a new git repo was initialized upon completion. Same goes for any new Angular project created using the CLI.
+
+angular.json - The core configuration file for any Angular projects.
+karma.conf.js - A configuration file for the default unit test runner (karma in this case).
+ - Angular works with other unit test runners as well but the default is karma.
+
+package-lock.json && package.json - both have to do with npm.
+ - package.json involves all of the packages used when running the Angular project that will be installed using npm.
+
+tsconfig files: 
+ - tsconfig.json is the important one here. 
+The tsconfig.json file is the TypeScript configuration file.
+
+
+
+*** Digging into the src directory ***
+ - The "app" directory is what we will mainly be dealing with. 
+All the application code lives in the "app" directory. 
+ *Note: Each file in the app directory (app.component.something) represents the files for our top level component. More on components later in the course. 
+
+- The "assets" directory is where most static items are stored. For example, images. 
+
+The "environments" directory contains files for configuring various environments. 
+ - This matters when pushing a project to production.
+ - More specifically, the need to configure things differently based on what environment you're in.
+
+The default index.html file is our global html file.  
+
+Next is the main.ts file:
+ - main.ts is the bootstrapping file for Angular.
+ - We rarely ever touch this file in the course. 
+
+What is Bootstrap?
+ - Open-source HTML, CSS, and JavaScript framework used to create mobile-first and responsive websites.
+
+polyfills.ts:
+ - Angular is built on the latest standards of the web platform.
+ - Targeting such a wide range of browsers is challenging because they do not support all features of modern browsers.
+ - polyfills.ts compensates by loading polyfill scripts ("polyfills") for the browsers that need to be supported for the project.
+
+styles.css is the global style location for the project.
+
+
+
+*** Introduction to TypeScript Types ***
+TypeScript = a small superset of JavaScript.
+ - Adds a small amount of new functionality.
+*Note: TypeScript is required for Angular.
+
+When declaring a variable in TypeScript, we commonly use the let keyword.
+     For example: let age;
+Our new age variable can also be set to a value. 
+ - In this case, age would be a number:
+     age = 3;
+However, in TypeScript, the variable age could also be equal to a string:
+     age = "Joe";
+Of course, this makes no sense as age is always a number. TypeScript defines a strict type using the following syntax:
+     let age: number;
+
+In some cases, we want to define a variable(s) that may return multiple types. For example, a result.
+ - Instead of declaring a strict type, we can tell TypeScript to be more relaxed by using the "any" type.
+     let result: any;
+     
+     result = 3;
+     result = true;
+     result = string;
+     etc ...
+
+There are other types aside from the basic boolean types. For example, the "object" type:
+ - Thinking back to JavaScript syntax, an object is represented by a set of curly braces { }
+     For example: 
+       let person: { name: string, age: number};
+       person = { name: "Joe", age: 25};
+       person.age = 40;
+       person.name = "Bob";
+
+*Another important part of TypeScript is that we can give parameters types: 
+     function createPerson(age: number, name: string){
+      return {age, name}
+     }
+
+     createPerson(25, "Joe");
+
+*By adding a colon followed by the type in the function parameters, we can't mix up the types in the function call shown above.
+  - What would happen if I were to flip the parameters in the function call?  
+       createPerson("Joe", 25);
+
+*Answer: Throws an error since the parameters have a strict type (order matters).
+
+EXAMPLE ON CLASSES: 
+  class Person {
+    age: number;
+    name: string;
+  }
+
+  let bob = new Person();
+*dot notation will work the same here. For example, .age and .name 
+
+For arrays, we can also set a strict type:
+ let ages: number[] = [] //Sets number array to a new empty array. 
+ ages.push(25); //pushes a number value 25 successfully
+
+If we attempt to push anything else other than type number to the array, an error is thrown.
+
+*Note: In arrays, we want to contain a variable list of types so type any[] is more common:
+   let ages: any[] = [];
+
+
+*** Specifying Scopes to Construction Parameters in Classes ***
+Constructor in TypeScript - special function of the class that is responsible for initializing the variables of the class.
+ - TypeScript defines a constructor using the constructor keyword.
+ - A constructor is a function and hence can be parameterized.
+ - The this keyword refers to the current instance of the class.
+
+class Movie {
+  title: string;
+  year: number;
+  constructor(title: string, year: number){
+    this.title = title;
+    this.year = year;
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+*Note: The above example requires a lot of work to simply store the "title" and "year" variables. Typically, this approach is standard. However, in TypeScript, there is a shorthand approach to this.
+  - The shorthand approach I'm refering to is to use "accessor modifiers."
+For example, using the keywords "public" and/or "private"
+
+class Movie {
+  constructor(public title: string, private year: number){
+  
+  }
+
+  formatTitle(){
+    return this.year;
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+Notes: 
+ - The formatTitle function above shows us that using dot notation will return the title or year types as expected thanks to the use of access modifiers.
+ - In the example above, the "year" property won't be accessible outside of the class due to it being private.  
+ - Typically, the constructor should be accessible so public is often used.
+
+
+*** TypeScript Decorators ***
+ - A way to provide metadata on a specific piece of code. 
+ - TypeScript Decorators are TypeScript Constructs.
+
+For example, on our Movie class, we may use a specific decorator (denoted by the @ symbol and parens):
+
+@Decorator()
+class Movie {
+  constructor(public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+*The typical example for a decorator is to give Angular itself instructions on how to use a specific class.
+  - As mentioned before, the Decorator above applies to our Movie class because it's the next code construct following the decorator. 
+  - Decorators are used heavily by Angular to mark certain pieces of code to have special meanings within the Angular framework.
+
+ *Decorators can be seen around classes as shown above but also on properties (longTitle example below):
+@Decorator()
+class Movie {
+   @PropertyDecorator() longTitle: string;
+  constructor(public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+---------------------------------------------------------------------------------------------------------
+
+ *Example of Decorators on parameters to functions: 
+
+@Decorator()
+class Movie {
+   @PropertyDecorator() longTitle: string;
+  constructor(@ParamDecorator() public title: string, private year: number){
+  
+  }
+}
+
+let twilight = new Movie("Twilight", 2008)
+
+
+*** Introduction to Angular Components ***
+     What is a Component?
+A Component is a combination of display and logic.
+ - When it comes to components, it's not just about simply displaying an image with text on top of it, it's what functionality goes along with the display shown.
+
+*Side Note: 
+  Check out the following PRO ONLY course for a more in depth understanding of Angular components
+    Link: https://thinkster.io/tutorials/fundamentals-of-angular-getting-started/introduction-to-angular-components 
+
+The .html and .ts files are the main files in any individual Components. 
+ - The following code example is taken out of our app.component.ts file: 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Flopbuster';
+}
+
+*Note: There is only one templateUrl in the @Component decorator allowed. 
+  - Multiple styleUrls can be used if needed.
+
+The selector seen in the code above is set to 'app-root'
+ - If we navigate to the index.html file in our application, we can see the following <app-root></app-root> tag:
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Flopbuster</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+
+app-root is not a built in html element. Instead, it's known as a "custom element."
+ - Browsers can include custom elements without any issues. The browser simply ignores any custom elements to avoid errors.
+ - Angular does not ignore custom elements. It processes the app-root tag and knows about the app-component. More specifically, it processes the app-component.ts file and sees the selector: 'app-root'
+When Angular encounters the app-root element in our index.html file, it knows the component in that spot in the dislay.
+
+Looking at the app-component.ts file code above, we see title = 'flopbuster';
+ - The title property is a custom piece of data that has been given to the component by default when creating a starter application in Angular. 
+
+
+*** Data Binding ***
+A web application is all about dynamic data. 
+ - Data that either changes or has changed. 
+ - Data Binding is displaying data that is dynamic. Data that either changes or has changed. 
+The idea is to display this type of data (aka Data Binding).
+
+*Note: The core purpose of Angular and other front-end frameworks is to bind data and display it to the user. 
+  - Static text such as an h1 tag is not what we necessarily want here. Look at the following example:
+      *app.component.ts* 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent {
+  movieTitle = "Batman and Robin";
+}
+
+*Goal: Get Angular to take the data in the movieTitle variable and render the data out in the app.component.html file. 
+  - To do this, use the special binding syntax {{ movieTitle }}
+
+For example: <h1>Hello {{ movieTitle }}</h1>
+
+What if we have a button as follows but we want the button to be disabled so that the user can't choose "Best movie better" for Batman and Robin specifically.
+  <button>Best Movie Ever</button>
+
+Our application may have a corresponding variable -> bestMovieEver = false; as shown below.
+@Component({
+  selector: 'my-app',
+  templateUrl: './app.component.html',
+  styleUrls: [ './app.component.css' ]
+})
+export class AppComponent {
+  movieTitle = "Batman and Robin";
+  bestMovieEver = false;
+}
+
+Back in the template, we want to bind it to be disabled using the following:
+<button [disabled]="!bestMovieEver">Best Movie Ever</button>
+ - The example above is considered property binding.
+ - The disabled attribute (disable without square brackets [] ) simply disables the button regardless of the variables boolean value. 
+
+*It's important to understand the difference between an html attribute (disabled) and the disabled property of the button.
+
+What if we wanted to hide the button instead of disabling it. 
+ - Use the [hidden]="!bestMovieEver" property binding.
+
+*Question: What is the difference between the two types of binding so far?
+  <h1>Hello {{ movieTitle }}</h1> and <button [disabled]="!bestMovieEver">Best Movie Ever</button>
+
+   - Double curly braces {{ }} is considered string interpolation. 
+Angular sticks the value of whatever I tell it to right into the html. We typically use this when we want to display a piece of data.
+
+   - Property Binding on the other hand with the square brackets [ ] is for binding to properties of DOM elements such as [hidden] or [disabled] properties.
+
+*Note: When working with data, complex objects are used instead of having seperate pieces of information. 
+  For example: 
+    favFlop = {
+    title: ,
+    yearReleased: ,
+    rating: ,
+    imdbLink: ,
+  }
+Data can be accessed in the object above by using dot notation (favFlop.title, etc).
+
+
+*** The Safe Navigation Operator ***
+The operator itself is represented by a question mark " ? "
+  For example: 
+<a [href]="favFlop.soundtrack?.spotifyLink">Spotify</a>
+
+The code above protects our application against null and undefined values in property paths.
+
+
+*** Listening to Events ***
+In essence, front end frameworks revolve around 2 things:
+ 1.) Giving the user information (Displaying/Binding data). 
+ 2.) Interacting with the user.
+
+Browsers have events that fire off when users interact.
+ - Allows us to receive information from the user.
+
+MDN Resource: https://developer.mozilla.org/en-US/docs/Web/API/Event
+ - MDN (Mozilla Developer Network) is a good resource for official documentation-type information on HTML, CSS, and JavaScript.
+
+How to add code with ability to listen for a click event:
+  Example: 
+    *** app.component.html ***
+<button 
+  (click)="onCheckout($event)"
+  class="btn btn-primary">Check Out</button>
+
+In the app.component.ts file, add the following method:
+  onCheckout(event){
+     console.log('check out', event);
+  }
+
+*When the button is clicked, check out is printed in the console.*
+  - Sometimes it's important when listening to an event to find out information about the event itself.
+  - To do this, a special parameter ($event) must be passed into the (click) shown above in the .html file.
+  - To receive the event, add another parameter in the .ts file (event).
+
+*Note: The event parameter is also added to the log statement above in the .ts file.
+  - By adding this event, there are also many properties that go along with it. 
+     For example: console.log('check out', event.target);
+  Shows us the html button element that the event is working with in the console window.
+
+Example code for a mouse over message:
+  *** app.component.html ***
+<h2 (mouseover)="titleHover('hovered')"
+
+  *** app.component.ts ***
+titleHover(message){
+  console.log(message + 'the title');
+}
+
+*When we hover in the application, "hovered the title" appears in the console window.*
+
+
+*** New Section: Organizing an Angular Application ***
+
+     Topics Covered: 
+ - What are modules, and the app module.
+ - What are services, and how to use them to organize your application state and logic.
+ - How to create components and services.
+ - How to divide up your application using child components.
+ - How to communicate between child and parent components.
+ - How to organize the CSS in your application.
+ - How to use components and services together.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+*What is a Module? 
+  - A grouping of application pieces such as components, services, and various other pieces. 
+  - A module is a class. 
+For example: 
+  export class AppModule { }
+
+Most module classes are empty like the one above. The most important part of a module is in the decorator. 
+  Example: 
+ - When we run the "ng new projectName" command, the following module is generated: 
+-------------------------------------------------------------------------------------
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [];
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppRoutingModule { }
+-------------------------------------------------------------------------------------
+*The @NgModule decorator above contains all of the information that the module needs to know in order to group up pieces of the application together to work with Angular.
+  - The example above shows a single parameter passed into the @NgModule which is an object that has 4 properties (declarations, imports, providers, and bootstrap).
+  - Keep in mind that the order here does not matter. However, the keys need to be correct.
+*Note: There are other keys that Angular supports. Each key above represents the most common/basic we will often see in a module.
+
+First up is "declarations"
+ - Declarations are where we list all the components for an application.
+
+"imports" 
+ - Where we can bring in other modules. 
+Our example above contains two other modules we're bringing in (BrowserModule and AppRoutingModule). 
+ 1.) BrowserModule is a built in Angular module that allows Angular to manipulate the browser.
+ 2.) AppRoutingModule is a custom module created by the CLI for our specific application that enables routing.
+
+*Note: It's important to know that modules can come from the Angular framework such as the BrowserModule, they can be modules that we create with our own code such as what's inside of the AppRoutingModule, or they can be 3rd party modules.
+ For example, Angular Material or other component libraries. 
+
+ 3.) Next we have "providers"
+  - Typically about services which we often don't touch. More specifically, services that are part of the AppModule.
+
+4.) Finally, there is the "bootstrap" property
+ - Lists the main root component. In this case [AppComponent] since we only have one component. 
+ - The AppComponent will typically always be the root component.
+ - This is the component that starts off the processing of Angular and how it handles the page.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*What are Services?
+ - A place to keep application state & logic.
+Angular provides containers to store application states and logic.
+
+ 1.) Components - store display logic (how to show a specific piece of information or what is visible when a user clicks a button).
+Components also store display state. 
+ - For example, a particular panel opening when a user clicks an open button.
+
+2.) Services - containers to store application logic and application state.
+ - For example, data such as the movies we're dealing with in the previous example. 
+Each movie would be better suited in a service over being stored inside of a component.
+
+Criteria for Display Vs. App Logic & State:
+ - If it belongs in a single view:
+     Display Logic & State.
+
+ - If it belongs in multiple views:
+     Application Logic & State.
+
+What does a service look like? 
+  Code Example: 
+---------------------------------------------
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FlopService{
+
+  constructor() { }
+}
+---------------------------------------------
+
+Lines 483-485 we have the decorator for the service.
+*Note: For a component, we have a component decorator and a module decorator. 
+
+In the example above, we have an Injectable decorator, not a service decorator. 
+  - Understand that the Injectable decorator allows Angular to know where the service can be available.
+
+The next important piece is the class itself: 
+
+export class FlopService{
+  movie = {
+    "title": "The Room",
+    "year": 2003,
+    "stars": 3.7,
+    "rating": "R", 
+    "director": "Tommy Wiseau", 
+  }
+
+  constructor() { }
+
+  calculateRentalFee(){
+    // implementation
+  }
+
+  retrieveFlops(){
+    // implementation
+  }
+}
+
+How to inject a service in a component:
+ - Give the component class a constructor() { } as seen below.
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  constructor(public flopService: FlopService){
+
+  }
+
+  onClick(){
+    this.flopService.retrieveFlops();
+  }
+
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+*Creating Services with the CLI
+In Angular, there are often very few modules created. Most of the time, just the app module created by the ng new command.
+*Note: It's good to learn the CLI so there is no need to manually create services.
+
+The "ng generate" command:
+ - To generate a service, run the following
+     *** ng generate service favFlop ***
+
+If for some reason we don't want a test file to be created when generating a service, run the ng generate service command with the --skipTests flag:
+     *** ng generate service testService --skipTests ***
+
+*Note: There is some shorthand when creating services. 
+  For example: "ng g s" is the same as "ng generate service"
+
+If we want to generate a service with shorthand and place it in another directory, run the following:
+  ng g s services/flopRetriever
+
+The command above will generate a new service named flopRetriever in the services directory.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*Creating Components with the CLI: 
+  Remember that Components Hold Display Logic & Display State
+   - Run the following command: 
+      "ng g c nameOfComponent"
+
+4 files are created in a component: 
+  1.) .html
+  2.) .spec.ts
+  3.) .ts
+  4.) .css
+*Note: There is something new/unique here that we have yet to see. 
+  UPDATE src/app/app.module.ts (467 bytes)
+
+When Angular applications are created, there is a default prefixv (app) created for the components inside of an application.
+ - When we see the @Component decorator in a component, the first item inside is the selector with the prefix 'app-nameOfComponent'
+
+In TypeScript files, the class is implementing an interface called OnInit
+  For example: 
+export class VoteComponent implements OnInit
+ - "implements" is a TypeScript keyword that tells us that OnInit is an interface.
+ - Basically a bunch of fancy logic to state that this class must have the ng OnInit function.
+
+        *** ngOnInit is a lifecycle method ***
+ - The method fires when the component is initialized. 
+ - Typically where we want to retrieve data that lives on the server. 
+
+For example, the code in a new component is as follows: 
+  export class VoteComponent implements OnInit {
+
+    constructor() {}
+
+    ngOnInit(): void {
+
+    }
+  }
+
+*Note: If we need to inject a service into the class, we can add it to the constructor.
+
+
+*** CLI Flags for Creating Components ***
+At this point, we've already seen the --dryRun and --skipTests flags. 
+ - The --inlineStyle flag is fairly common as well. This flag tells Angular not to put the CSS into its own seperate file. Instead, it puts the file inline. 
+ - Another common flag is --inlineTemplate where the html file is inline as well. 
+ - The --selector flag is not one that's commonly used but is still important. This flag allows us to customize the selector in the .ts file.
+
+*Working example: 
+  Run the following on the command line -> ng g c cart --skipTests --inlineStyle --inlineTemplate 
+   - Only 1 file is created but the app.module.ts is still updated: 
+CREATE src/app/cart/cart.component.ts (259 bytes)
+UPDATE src/app/app.module.ts (541 bytes)
+
+*Note: The updates to our app.module.ts file are important to keep in mind as Angular will not know about any new components if they aren't imported/added as follows:
+  import { VoteComponent } from './vote/vote.component';
+  import { CartComponent } from './cart/cart.component';
+
+  @NgModule({
+    declarations: [
+      VoteComponent,
+      CartComponent
+    ],
+  })
+
+*** Quick Review ***
+1.) What's the flag for not installing node modules in a new app? 
+  *Answer: --skipInstall
+
+2.) What's the command that npm start runs? 
+  *Answer: ng serve
+
+3.) How do you put a service in a subdirectory?
+  *Answer: ng g s subdir/name
