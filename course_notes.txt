@@ -631,3 +631,6 @@ UPDATE src/app/app.module.ts (541 bytes)
 
 3.) How do you put a service in a subdirectory?
   *Answer: ng g s subdir/name
+
+
+*** Child Components ***
