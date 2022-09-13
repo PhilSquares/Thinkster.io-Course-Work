@@ -633,4 +633,61 @@ UPDATE src/app/app.module.ts (541 bytes)
   *Answer: ng g s subdir/name
 
 
-*** Child Components ***
+*** Sending Data to a Child Component ***
+Goal: Have the parent component tell the child component what data to render.
+
+ - Step 1: Prepare the child component to receive the data.
+This happens by creating a property that will hold the movie. 
+
+  For example: movie-tile.component.ts
+
+import { Component, Input } from '@angular/core';
+
+@Component ({
+  selector: 'my-movie-tile',
+  templateUrl: './movie-tile.component.html',
+  styleUrls: [ ]
+})
+export class MovieTileComponent{
+  @Input() movie; 
+}
+
+The property above (movie) uses a special decorator @Input() on the property that tells Angular that the parent will send data. 
+  *Note: Remember to import Input at the top of the file (it comes from the same @angular/core component).
+
+
+ - Step 2: Tell the parent to send the data into the child component.
+Navigate to the parent component's template (app.component.html in this example) and use the binding syntax we already learned about. 
+  *** Two types of binding we learned about ***
+    1.) Interpolation {{}}
+    2.) Property Binding []
+
+  For example: 
+<my-movie-tile [movie]="wingCommander"></my-movie-tile>
+
+*Note: The <my-movie-title> tag used in the example above is the selector we used in the @Component decorator. 
+
+Example code for movie-tile.component.html: 
+  <div class="card bg-dark text-light" style="width: 10rem; reser: both">
+       <div class="card-body">
+       <h6>{{movie.title}}</h6>
+       
+       <button
+
+         class="btn btn-primary"
+         style="flex">Rent</button>
+       </div>
+    </div>
+
+------------------------------------------------------------------------------------------------------------------------------------    
+*Exercise: Sending Data to a Child Component
+
+Directions:
+In the project linked below:
+
+Create a child component out of the card-body div
+Send the data for the # of movies rented, and the list of titles to the new component
+
+Bonus challenge: Hook up the rent buttons on the two movie tiles to have them "rent" movies and adjust the data in the rental list.
+Click the following link to open up the exercise: https://stackblitz.com/fork/angular-emgy4i?file=src%2Fapp%2Fapp.component.html
+-------------------------------------------------------------------------------------------------------------------------------------
