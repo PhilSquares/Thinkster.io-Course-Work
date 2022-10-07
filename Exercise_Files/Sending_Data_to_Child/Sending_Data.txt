@@ -1,0 +1,9 @@
+Directions:
+In the project linked below:
+
+Create a child component out of the card-body div
+Send the data for the # of movies rented, and the list of titles to the new component
+Bonus challenge: Hook up the rent buttons on the two movie tiles to have them "rent" movies and adjust the data in the rental list.
+  - Look at the app.component.html and app.component.ts for solutions in the link provided below.
+
+Click the following link to open up the completed exercise: https://stackblitz.com/edit/angular-fimfnv?file=src%2Fapp%2Fapp.component.ts 
