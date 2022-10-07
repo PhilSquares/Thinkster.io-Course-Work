@@ -659,3 +659,33 @@ When building an application in one component, complexities may start to occur. 
        
  Open the parent HTML file and add the selector as a tag to display the component properly in the UI:
    <my-movie-tile></my-movie-tile>
+
+*** Sending Data to a Child Component ***
+Parent Components in Angular can tell Child Components what data it should to render.
+  - This is one of the powerful features of encapsulation and subcomponents. 
+  
+Steps: 
+  1.) Remove any hard coded data in the child component. 
+  2.) Prepare the child component to receive the data (create a property that holds a movie).
+  
+For example:
+ import { Component, Input } from '@angular/core';
+       
+       @Component({
+         selector: 'my-movie-tile',
+         templateURL: './movie-tile.component.html',
+         styleUrls: [ ] 
+       })
+       export class MovieTileComponent {
+         @Input movie;
+       }
+       
+*Note: The special deorator used above (@Input) tells Angular that the parent will send data down into the child and that the movie property is the one that should be used. 
+  - Make sure to import the decorator as seen above. It uses the same library as Component. 
+  
+  3.) Tell the parent to send the data into the child.
+  
+ Navigate to the parent components HTML file and tell it to send the data into the child as follows:
+      <my-movie-tile [movie]="propertyName"></my-movie-tile>
+
+*The code above is binding to a property. 
