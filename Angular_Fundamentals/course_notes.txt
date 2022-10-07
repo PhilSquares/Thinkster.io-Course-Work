@@ -631,3 +631,31 @@ UPDATE src/app/app.module.ts (541 bytes)
 
 3.) How do you put a service in a subdirectory?
   *Answer: ng g s subdir/name
+  
+*** Child Components ***
+When building an application in one component, complexities may start to occur. Files become very large.
+  - This section of the course looks at how to use a Child Component to divide up our application into multiple pieces of functionality. 
+  - Often, this type of work will start in a components HTML file because the HTML itself indicates a reasonable division of how things work.
+
+*Question: How do we use components together?
+  - As individual components are created in an application, we need to make it so that they're all communicating. 
+  
+*Goal: Tell Angular to render a Child Component in a specific place in our application.
+  1.) Navigate to the HTML file of the component we want to make the parent to contain the child.
+  2.) Add an HTML element that matches the selector of the component recently created.
+  
+     In this case, we're using the following selector from an example component:
+     
+       import { Component } from '@angular/core';
+       
+       @Component({
+         selector: 'my-movie-tile',
+         templateURL: './movie-tile.component.html',
+         styleUrls: [ ] 
+       })
+       export class MovieTileComponent {
+       
+       }
+       
+ Open the parent HTML file and add the selector as a tag to display the component properly in the UI:
+   <my-movie-tile></my-movie-tile>
