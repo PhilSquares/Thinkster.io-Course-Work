@@ -1,0 +1,6 @@
+Directions:
+In the project linked below:
+
+Create a "Clear Rentals" button in the RentalListComponent.
+Cause the appropriate actions to happen when the button is clicked.
+Click the following link to open up the exercise: https://stackblitz.com/edit/angular-gisjfq?file=src%2Fapp%2Fapp.component.ts
