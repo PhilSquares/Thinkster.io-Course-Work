@@ -754,3 +754,19 @@ app.component.ts:
     this.rentalList.count++;
     this.rentalList.titles += ", " + movie.title;
   }
+
+*** Container vs Presenter Components *** 
+
+This section may also be referred to as smart vs dumb components. 
+ - Data owned by the parent is known as a container where child components are called presenters. 
+Both labels help us identify what the responsibilities are for various kinds of components as well as what logic should be present. 
+
+*Container Components:
+  - Contain other child components but also contain data.
+
+Responsibilities - retrieve, store, update, or manipulate data.
+  *Note: Containers might retrieve or store the data by asking a service to do the job but it's ultimately the one that kicks off the retrieveal/storage.
+    - Decides when to update/manipulate that data. 
+
+*Presenter Component:
+Responsibilities - displaying the data and sending events up to their Container Components. 
