@@ -631,7 +631,9 @@ UPDATE src/app/app.module.ts (541 bytes)
 
 3.) How do you put a service in a subdirectory?
   *Answer: ng g s subdir/name
-  
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------  
 *** Child Components ***
 When building an application in one component, complexities may start to occur. Files become very large.
   - This section of the course looks at how to use a Child Component to divide up our application into multiple pieces of functionality. 
@@ -659,7 +661,10 @@ When building an application in one component, complexities may start to occur. 
        
  Open the parent HTML file and add the selector as a tag to display the component properly in the UI:
    <my-movie-tile></my-movie-tile>
+--------------------------------------------------------------------------------------------------------------------------------------------
 
+
+-------------------------------------------------------------------------------------------------------
 *** Sending Data to a Child Component ***
 Parent Components in Angular can tell Child Components what data it should to render.
   - This is one of the powerful features of encapsulation and subcomponents. 
@@ -689,7 +694,10 @@ For example:
       <my-movie-tile [movie]="propertyName"></my-movie-tile>
 
 *The code above is binding to a property. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+--------------------------------------------------------------------------------------------------------------------------------------
 *** Communicating with Parent Components ***
  - Sending a signal or other data up from a child component to a parent component. 
 
@@ -754,7 +762,10 @@ app.component.ts:
     this.rentalList.count++;
     this.rentalList.titles += ", " + movie.title;
   }
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
 *** Container vs Presenter Components *** 
 
 This section may also be referred to as smart vs dumb components. 
@@ -770,3 +781,80 @@ Responsibilities - retrieve, store, update, or manipulate data.
 
 *Presenter Component:
 Responsibilities - displaying the data and sending events up to their Container Components. 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+*** Accessing Static Assets ***
+How to access images in an /image directory throughout our Angular application:
+  - Use an img tag with the correct directory. 
+
+For example: 
+<img src="/assets/images/wing-commander.jpg" alt="" class="mb-3">
+                      or
+<img [src]="movie.image" alt="" class="mb-3">
+
+*Note: Once the binding is changed using the square brackets, the value inside of the double quotes ("movie.image") is no longer evaluated as a String. Instead, it's evaluated as a property of the movie-tile component.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+*** Best Practices in Angular ***
+1.) Angular Coding Style Guide
+  - Go to Google and search "Angular sytle guide"
+  - The first link should be by angular.io
+Link: https://angular.io/guide/styleguide 
+
+2.) File Names
+  - Example: name-parts.type.extension
+
+3.) One Object per File
+  - Concept of having 1 object, 1 component, or 1 service in a single file. 
+
+4.) Component Prefixes
+  - Using vs Standardizing
+Add a dash in the selector such as my-movie instead of movie.
+  *Notes: 
+    1.) Always use a prefix for selectors so that you have at least one dash inside of the selector.
+    2.) Standardize prefixes
+      - In the past we've used selector names such as 'my-movie-tile'
+      - Make it something specific to the component or comapny. 
+
+*Note: There is a place inside of every Angular application where you can configure/tell Angular what the standard prefix is (inside of the angular.json file).
+  - Keep in mind that the default prefix listed in the angular.json file will be utilized when using the CLI.  
+
+5.) Purpose of Various Objects in Angular
+  - Components: view functionality and state
+  - Services: app functionality and state
+
+*** Overview of Using Services & Components Together ***
+  *Question 1: What kind of functionality/data should a component such as the RentalViewComponent have?
+    Functionality:
+    - Organize child components. 
+    - Show flops for rent.
+    - Show what's being rented.
+
+    Data: 
+    - Which flops are visible where.
+    - Order flops are displayed.
+  
+  *Question 2: What kind of functionality/data should a service such as the MovieListService have?
+    Functionality: 
+    - Retrieve data from server. 
+    - Update data on server.
+    - Update rental/in stock status.
+    
+    Data:
+    - Master flop list.
+
+  *Question 3: How should Components and Services be connected to eachother? 
+    - The RentalViewComponent could contain several child components: 
+      1.) MovieComponent: displays a single movie.
+      2.) RentalListComponent: displays our list of rentals.
+      3.) LoginComponent: allows users to login when they want to. 
+
+    - Services: 
+      1.) MovieListService
+      2.) RentalCartService
+
+  RentalViewComponent should be connected to the MovieListService and RentalCartService. 
+    - This component will access both services.
+    - The list of child components above will not have direct access to the services as it will make understanding who is changing what kind of data/when as well as who initiates that change very difficult.  
