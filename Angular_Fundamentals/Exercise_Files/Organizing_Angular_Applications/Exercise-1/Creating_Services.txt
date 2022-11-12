@@ -1,0 +1,26 @@
+Directions:
+Using the CLI...
+
+Create a service named rentalFeeCalculator
+Put it in the rental subdirectory
+Don't create a test file
+Create a calculate() method that returns 2.99
+
+*** Solution ***
+ng g s rental/rentalFeeCalculator --skipTests
+
+Code:
+  import { Injectable } from '@angular/core';
+
+  @Injectable({
+    providedIn: 'root'
+  })
+
+  export class RentalFeeCalculatorService {
+
+    constructor() { }
+
+    calculate() {
+        return 2.99
+    }
+  }
