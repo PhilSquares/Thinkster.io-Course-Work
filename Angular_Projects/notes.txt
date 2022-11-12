@@ -57,6 +57,18 @@ ngModel is set to the name of the member in our component (newItem).
 The code above makes the button fire the addNewItem() method when clicked.
 
 * Adding delete functionality to our list * 
-Think about how we listened to the (click) event on our button above. The same can be done on an <li> tag. 
+Think about how we listened to the (click) event on our button above. The same can be done on an <li> tag by adding an additional (click) event. 
    For example: 
-     
+     <li (click)="deleteItem(item)" *ngFor="let item of list">
+
+In the shopping.list.component.ts class, we've added a new deleteItem(item) function with 1 parameter (item) as follows:
+      deleteItem(item) {
+          this.list = this.list.filter((cur) => {
+            return cur != item;
+         });
+      }
+
+For more info on the filter method, see the following examples:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+The code above creates a new array which will not interfere with our original list array. 
