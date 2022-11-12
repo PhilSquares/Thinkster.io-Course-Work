@@ -1,0 +1,74 @@
+*** Becoming an Angular Developer ***
+Shopping Application Project Notes: 
+1.) First task is to display a list of items in the shopping list. 
+  - In the ShoppingListComponent, we're going to give the list a "member" that represents a list of items. In this case, it's an array seen on line 18 in the project code.
+  - For this code example, the data is displayed in the template section of the shopping.list.component.ts file instead of a seperate .html file.
+  - The Angular syntax we're using to enhance our HTML file is *ngFor which shows us each item in the list.
+       For example:
+         <li *ngFor="let item of list">
+    *Note: 
+     - The first value "item" is an identifier that we create/name ourselves.
+     - The second value in the code above "list" is the list of items that we want to iterate over that creates an <li> for each item.
+
+2.) The next task is to bind the value of the current list item to our HTML.
+  - In this case, we want to bind the list item itself as each list item is simply an element of the array.
+  - Each element in the array is a String. 
+       For example, the correct binding would be the following:
+         {{item}}
+
+3.) Add a function that allows the user to add new items to the shopping list.
+*Note: Functionality like this will always be coded into our component. 
+
+Refer to the following code seen below (shopping.list.component.ts): 
+
+import { Component, Input } from '@angular/core';
+
+@Component({
+  selector: 'shopping-list',
+  template: `
+    <h1>Shopping List</h1>
+    <ul>
+    <li *ngFor="let item of list">
+    {{item}}
+    </li>
+    </ul>
+    <input [(ngModel)]="newItem" />
+    <button (click)="addNewItem()">Add</button>
+  `,
+  styles: [``],
+})
+export class ShoppingListComponent {
+  list = ['Milk', 'Eggs'];
+  newItem = '';
+
+  addNewItem() {
+    this.list.push(this.newItem);
+    this.newItem = '';
+  }
+}
+
+*Important Notes:
+ - In the code above, we set this.newItem to whatever the user types in the field before clicking the add button. 
+ - To achieve this goal, 2 new code edits were made in the template section: 
+   1.) <input [(ngModel)]="newItem" />
+ngModel is set to the name of the member in our component (newItem).
+
+   2.) <button (click)="addNewItem()">Add</button>
+The code above makes the button fire the addNewItem() method when clicked.
+
+* Adding delete functionality to our list * 
+Think about how we listened to the (click) event on our button above. The same can be done on an <li> tag by adding an additional (click) event. 
+   For example: 
+     <li (click)="deleteItem(item)" *ngFor="let item of list">
+
+In the shopping.list.component.ts class, we've added a new deleteItem(item) function with 1 parameter (item) as follows:
+      deleteItem(item) {
+          this.list = this.list.filter((cur) => {
+            return cur != item;
+         });
+      }
+
+For more info on the filter method, see the following examples:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+The code above creates a new array which will not interfere with our original list array. 
